@@ -1,0 +1,13 @@
+{
+  "name": "pokebit",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "https://github.com/gasingdong/pokebit.git",
+  "author": "<gasingdong@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "gatsby": "^2.22.15",
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1"
+  }
+}
