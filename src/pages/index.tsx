@@ -2,22 +2,23 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import 'normalize.css';
 import './index.scss';
+import PokemonCard from '../components/PokemonCard';
 
 const Home: React.FC = () => {
-  const [pokemon, setPokemon] = useState([]);
+  const [pokemonList, setPokemonList] = useState([]);
 
   useEffect(() => {
-    const fetchPokemon = async (): Promise<void> => {
+    const fetchPokemonList = async (): Promise<void> => {
       const result = await axios.get('http://localhost:5000/api/pokemon');
-      setPokemon(result.data.results);
+      setPokemonList(result.data.results.slice(0, 3));
     };
-    fetchPokemon();
+    fetchPokemonList();
   }, []);
 
   return (
     <>
-      {pokemon.map((mon: BasicPokemon) => (
-        <h1 key={mon.name}>{mon.name}</h1>
+      {pokemonList.map((element: BasicPokemon) => (
+        <PokemonCard key={element.name} pokemon={element} />
       ))}
     </>
   );
