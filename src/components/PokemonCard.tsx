@@ -12,6 +12,9 @@ type PokemonData = {
   species: {
     names: Array<{ language: { name: string; url: string }; name: string }>;
   };
+  sprites: {
+    front_default: string;
+  };
 };
 
 const PokemonCard: React.FC<PokemonCardProps> = ({
@@ -36,6 +39,7 @@ const PokemonCard: React.FC<PokemonCardProps> = ({
 
   useEffect(() => {
     if (pokemonData) {
+      console.log(pokemonData);
       const translatedName = pokemonData.species.names.find(
         (element) => element.language.name === 'en'
       );
@@ -45,7 +49,21 @@ const PokemonCard: React.FC<PokemonCardProps> = ({
       }
     }
   }, [pokemonData]);
-  return <h1>{pokemonName}</h1>;
+
+  return (
+    <div className="card">
+      <div className="card-header">
+        <p className="card-header-title">{pokemonName}</p>
+      </div>
+      <div className="card-image">
+        <img
+          src={pokemonData ? pokemonData.sprites.front_default : ''}
+          alt="Pokemon sprite"
+        />
+      </div>
+      <div className="card-content" />
+    </div>
+  );
 };
 
 export default PokemonCard;
