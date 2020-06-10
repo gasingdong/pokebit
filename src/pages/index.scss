@@ -1,2 +1,20 @@
 @charset "utf-8";
 @import '~bulma/bulma.sass';
+
+.types {
+  width: 202px;
+  height: 46px;
+  background-repeat: no-repeat;
+}
+
+.types-en {
+  background-image: url('../assets/types/en.png');
+}
+
+.types-grass {
+  background-position: -1005px -45px;
+}
+
+.types-poison {
+  background-position: -603px 0px;
+}
