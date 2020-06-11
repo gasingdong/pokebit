@@ -52,27 +52,29 @@ const PokemonCard: React.FC<PokemonCardProps> = ({
   }, [pokemonData]);
 
   return (
-    <div className="card">
-      <div className="card-header">
-        <p className="card-header-title">{pokemonName}</p>
-        <div className="types-wrapper">
-          <div
-            className={`types types-en types-${pokemonData?.types[0].type.name}`}
-          />
-          {pokemonData && pokemonData.types.length > 1 && (
+    <div className="tile is-parent">
+      <div className="tile is-child card">
+        <div className="card-header">
+          <p className="card-header-title">{pokemonName}</p>
+          <div className="types-wrapper">
             <div
-              className={`types types-en types-${pokemonData.types[1].type.name}`}
+              className={`types types-en types-${pokemonData?.types[0].type.name}`}
             />
-          )}
+            {pokemonData && pokemonData.types.length > 1 && (
+              <div
+                className={`types types-en types-${pokemonData.types[1].type.name}`}
+              />
+            )}
+          </div>
         </div>
+        <div className="card-image">
+          <img
+            src={pokemonData ? pokemonData.sprites.front_default : ''}
+            alt="Pokemon sprite"
+          />
+        </div>
+        <div className="card-content" />
       </div>
-      <div className="card-image">
-        <img
-          src={pokemonData ? pokemonData.sprites.front_default : ''}
-          alt="Pokemon sprite"
-        />
-      </div>
-      <div className="card-content" />
     </div>
   );
 };

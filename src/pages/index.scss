@@ -1,10 +1,15 @@
 @charset "utf-8";
 @import '~bulma/bulma.sass';
 
+.tile.is-ancestor {
+  flex-wrap: wrap;
+}
+
 .types-wrapper {
   display: flex;
   justify-content: center;
   align-items: center;
+  margin-right: 2rem;
 }
 
 .types {
