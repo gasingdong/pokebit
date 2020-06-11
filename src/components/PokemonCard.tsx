@@ -55,14 +55,16 @@ const PokemonCard: React.FC<PokemonCardProps> = ({
     <div className="card">
       <div className="card-header">
         <p className="card-header-title">{pokemonName}</p>
-        <div
-          className={`types types-en types-${pokemonData?.types[0].type.name}`}
-        />
-        {pokemonData && pokemonData.types.length > 1 && (
+        <div className="types-wrapper">
           <div
-            className={`types types-en types-${pokemonData.types[1].type.name}`}
+            className={`types types-en types-${pokemonData?.types[0].type.name}`}
           />
-        )}
+          {pokemonData && pokemonData.types.length > 1 && (
+            <div
+              className={`types types-en types-${pokemonData.types[1].type.name}`}
+            />
+          )}
+        </div>
       </div>
       <div className="card-image">
         <img

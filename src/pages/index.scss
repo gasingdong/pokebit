@@ -1,9 +1,16 @@
 @charset "utf-8";
 @import '~bulma/bulma.sass';
 
+.types-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 .types {
-  width: 202px;
-  height: 46px;
+  width: 100px;
+  height: 22px;
+  margin: 0.1rem;
   background-repeat: no-repeat;
 }
 
@@ -12,9 +19,9 @@
 }
 
 .types-grass {
-  background-position: -1005px -45px;
+  background-position: 99.901% 50%;
 }
 
 .types-poison {
-  background-position: -603px 0px;
+  background-position: 59.98% 1.087%;
 }
