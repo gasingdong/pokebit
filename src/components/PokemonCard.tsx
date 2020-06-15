@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { number, string } from 'prop-types';
 
 type PokemonCardProps = {
   pokemon: {
@@ -16,6 +17,11 @@ type PokemonData = {
     front_default: string;
   };
   types: Array<{ slot: number; type: { name: string; url: string } }>;
+  stats: Array<{
+    base_stat: number;
+    effort: number;
+    stat: { name: string; url: string };
+  }>;
 };
 
 const PokemonCard: React.FC<PokemonCardProps> = ({
@@ -51,20 +57,27 @@ const PokemonCard: React.FC<PokemonCardProps> = ({
     }
   }, [pokemonData]);
 
+  const getStat = (name: string): number | undefined => {
+    return pokemonData?.stats.find((element) => element.stat.name === name)
+      ?.base_stat;
+  };
+
   return (
     <div className="tile is-parent">
       <div className="tile is-child card">
         <div className="card-header">
-          <p className="card-header-title">{pokemonName}</p>
-          <div className="types-wrapper">
-            <div
-              className={`types types-en types-${pokemonData?.types[0].type.name}`}
-            />
-            {pokemonData && pokemonData.types.length > 1 && (
+          <div className="card-header-title">
+            <p className="card-header-name">{pokemonName}</p>
+            <div className="types-wrapper">
               <div
-                className={`types types-en types-${pokemonData.types[1].type.name}`}
+                className={`types types-en types-${pokemonData?.types[0].type.name}`}
               />
-            )}
+              {pokemonData && pokemonData.types.length > 1 && (
+                <div
+                  className={`types types-en types-${pokemonData.types[1].type.name}`}
+                />
+              )}
+            </div>
           </div>
         </div>
         <div className="card-image">
@@ -73,7 +86,36 @@ const PokemonCard: React.FC<PokemonCardProps> = ({
             alt="Pokemon sprite"
           />
         </div>
-        <div className="card-content" />
+        <div className="card-content">
+          <table className="table is-fullwidth stats">
+            <tbody>
+              <tr>
+                <th>HP:</th>
+                <td>{getStat('hp')}</td>
+              </tr>
+              <tr>
+                <th>Attack:</th>
+                <td>{getStat('attack')}</td>
+              </tr>
+              <tr>
+                <th>Defense:</th>
+                <td>{getStat('defense')}</td>
+              </tr>
+              <tr>
+                <th>Sp.Atk:</th>
+                <td>{getStat('special-attack')}</td>
+              </tr>
+              <tr>
+                <th>Sp.Def:</th>
+                <td>{getStat('special-defense')}</td>
+              </tr>
+              <tr>
+                <th>Speed:</th>
+                <td>{getStat('speed')}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
       </div>
     </div>
   );

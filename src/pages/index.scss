@@ -7,7 +7,6 @@
 
 .types-wrapper {
   display: flex;
-  justify-content: center;
   align-items: center;
   margin-right: 2rem;
 }
@@ -29,4 +28,8 @@
 
 .types-poison {
   background-position: 59.98% 1.087%;
+}
+
+.card-header-name {
+  margin-right: 1rem;
 }
