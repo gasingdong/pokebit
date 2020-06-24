@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { number, string } from 'prop-types';
+import StatsBlock from './StatsBlock';
 
 type PokemonCardProps = {
   pokemon: {
@@ -57,11 +58,6 @@ const PokemonCard: React.FC<PokemonCardProps> = ({
     }
   }, [pokemonData]);
 
-  const getStat = (name: string): number | undefined => {
-    return pokemonData?.stats.find((element) => element.stat.name === name)
-      ?.base_stat;
-  };
-
   return (
     <div className="card">
       <div className="card__header">
@@ -80,34 +76,7 @@ const PokemonCard: React.FC<PokemonCardProps> = ({
             alt="Pokemon sprite"
           />
         </div>
-        <table>
-          <tbody>
-            <tr>
-              <th>HP:</th>
-              <td>{getStat('hp')}</td>
-            </tr>
-            <tr>
-              <th>Attack:</th>
-              <td>{getStat('attack')}</td>
-            </tr>
-            <tr>
-              <th>Defense:</th>
-              <td>{getStat('defense')}</td>
-            </tr>
-            <tr>
-              <th>Sp.Atk:</th>
-              <td>{getStat('special-attack')}</td>
-            </tr>
-            <tr>
-              <th>Sp.Def:</th>
-              <td>{getStat('special-defense')}</td>
-            </tr>
-            <tr>
-              <th>Speed:</th>
-              <td>{getStat('speed')}</td>
-            </tr>
-          </tbody>
-        </table>
+        {pokemonData?.stats && <StatsBlock stats={pokemonData?.stats} />}
       </div>
     </div>
   );
