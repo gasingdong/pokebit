@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import 'normalize.css';
-import './index.scss';
 import '../stylesheets/main.scss';
 import PokemonCard from '../components/PokemonCard';
 
