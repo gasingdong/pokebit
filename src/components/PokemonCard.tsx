@@ -63,63 +63,55 @@ const PokemonCard: React.FC<PokemonCardProps> = ({
   };
 
   return (
-    <div className="tile">
-      <div className="tile is-parent">
-        <div className="tile is-child card">
-          <div className="card-header">
-            <div className="card-header-title">
-              <p className="card-header-name">{pokemonName}</p>
-              <div className="types-wrapper">
-                <div
-                  className={`types types-en types-${pokemonData?.types[0].type.name}`}
-                />
-                {pokemonData && pokemonData.types.length > 1 && (
-                  <div
-                    className={`types types-en types-${pokemonData.types[1].type.name}`}
-                  />
-                )}
-              </div>
-            </div>
-          </div>
-          <div className="tile is-child card-content">
-            <div className="tile has-text-centered box">
-              <img
-                src={pokemonData ? pokemonData.sprites.front_default : ''}
-                alt="Pokemon sprite"
-              />
-            </div>
-            <div className="tile box">
-              <table className="table is-fullwidth stats">
-                <tbody>
-                  <tr>
-                    <th>HP:</th>
-                    <td>{getStat('hp')}</td>
-                  </tr>
-                  <tr>
-                    <th>Attack:</th>
-                    <td>{getStat('attack')}</td>
-                  </tr>
-                  <tr>
-                    <th>Defense:</th>
-                    <td>{getStat('defense')}</td>
-                  </tr>
-                  <tr>
-                    <th>Sp.Atk:</th>
-                    <td>{getStat('special-attack')}</td>
-                  </tr>
-                  <tr>
-                    <th>Sp.Def:</th>
-                    <td>{getStat('special-defense')}</td>
-                  </tr>
-                  <tr>
-                    <th>Speed:</th>
-                    <td>{getStat('speed')}</td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-          </div>
+    <div className="card">
+      <div className="card__header">
+        <p className="card__name">{pokemonName}</p>
+        <div className="card__types">
+          <div
+            className={`types types-en types-${pokemonData?.types[0].type.name}`}
+          />
+          {pokemonData && pokemonData.types.length > 1 && (
+            <div
+              className={`types types-en types-${pokemonData.types[1].type.name}`}
+            />
+          )}
         </div>
+      </div>
+      <div className="card-content">
+        <div className="card__sprite">
+          <img
+            src={pokemonData ? pokemonData.sprites.front_default : ''}
+            alt="Pokemon sprite"
+          />
+        </div>
+        <table>
+          <tbody>
+            <tr>
+              <th>HP:</th>
+              <td>{getStat('hp')}</td>
+            </tr>
+            <tr>
+              <th>Attack:</th>
+              <td>{getStat('attack')}</td>
+            </tr>
+            <tr>
+              <th>Defense:</th>
+              <td>{getStat('defense')}</td>
+            </tr>
+            <tr>
+              <th>Sp.Atk:</th>
+              <td>{getStat('special-attack')}</td>
+            </tr>
+            <tr>
+              <th>Sp.Def:</th>
+              <td>{getStat('special-defense')}</td>
+            </tr>
+            <tr>
+              <th>Speed:</th>
+              <td>{getStat('speed')}</td>
+            </tr>
+          </tbody>
+        </table>
       </div>
     </div>
   );

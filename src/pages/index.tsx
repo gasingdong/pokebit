@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import 'normalize.css';
 import './index.scss';
+import '../stylesheets/main.scss';
 import PokemonCard from '../components/PokemonCard';
 
 const Home: React.FC = () => {
@@ -17,11 +18,9 @@ const Home: React.FC = () => {
 
   return (
     <div className="container">
-      <div className="tile is-ancestor">
-        {pokemonList.map((element: BasicPokemon) => (
-          <PokemonCard key={element.name} pokemon={element} />
-        ))}
-      </div>
+      {pokemonList.map((element: BasicPokemon) => (
+        <PokemonCard key={element.name} pokemon={element} />
+      ))}
     </div>
   );
 };
