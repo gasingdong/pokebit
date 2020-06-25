@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { number, string } from 'prop-types';
 import StatsBlock from './StatsBlock';
+import BodyStatsBlock from './BodyStatsBlock';
 
 type PokemonCardProps = {
   pokemon: {
@@ -23,6 +24,8 @@ type PokemonData = {
     effort: number;
     stat: { name: string; url: string };
   }>;
+  height: number;
+  weight: number;
 };
 
 const PokemonCard: React.FC<PokemonCardProps> = ({
@@ -76,6 +79,12 @@ const PokemonCard: React.FC<PokemonCardProps> = ({
             alt="Pokemon sprite"
           />
         </div>
+        {pokemonData?.height && pokemonData.weight && (
+          <BodyStatsBlock
+            height={pokemonData.height}
+            weight={pokemonData.weight}
+          />
+        )}
         {pokemonData?.stats && <StatsBlock stats={pokemonData?.stats} />}
       </div>
     </div>
