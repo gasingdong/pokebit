@@ -10,7 +10,7 @@ const Home: React.FC = () => {
   useEffect(() => {
     const fetchPokemonList = async (): Promise<void> => {
       const result = await axios.get('http://localhost:5000/api/pokemon');
-      setPokemonList(result.data.results.slice(0, 10));
+      setPokemonList(result.data);
     };
     fetchPokemonList();
   }, []);
