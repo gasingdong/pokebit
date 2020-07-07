@@ -11060,6 +11060,11 @@ react-style-singleton@^2.1.0:
     invariant "^2.2.4"
     tslib "^1.0.0"
 
+react-window-infinite-loader@^1.0.5:
+  version "1.0.5"
+  resolved "https://registry.yarnpkg.com/react-window-infinite-loader/-/react-window-infinite-loader-1.0.5.tgz#6fe094d538a88978c2c9b623052bc50cb28c2abc"
+  integrity sha512-IcPIq8lADK3zsAcqoLqQGyduicqR6jWkiK2VUX5sKSI9X/rou6OWlOEexnGyujdNTG7hSG8OVBFEhLSDs4qrxg==
+
 react@^16.12.0, react@^16.13.1, react@^16.8.0:
   version "16.13.1"
   resolved "https://registry.yarnpkg.com/react/-/react-16.13.1.tgz#2e818822f1a9743122c063d6410d85c1e3afe48e"
