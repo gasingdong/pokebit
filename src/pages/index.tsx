@@ -6,11 +6,13 @@ import PokemonCard from '../components/PokemonCard';
 
 const Home: React.FC = () => {
   const [pokemonList, setPokemonList] = useState([]);
+  const [canLoadMore, setCanLoadMore] = useState(false);
 
   useEffect(() => {
     const fetchPokemonList = async (): Promise<void> => {
       const result = await axios.get('http://localhost:5000/api/pokemon');
-      setPokemonList(result.data);
+      setPokemonList(result.data.list);
+      setCanLoadMore(result.data.next);
     };
     fetchPokemonList();
   }, []);
