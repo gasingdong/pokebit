@@ -6,6 +6,8 @@
   "author": "<gasingdong@gmail.com>",
   "license": "MIT",
   "dependencies": {
+    "@types/react-window": "^1.8.2",
+    "@types/react-window-infinite-loader": "^1.0.3",
     "axios": "^0.19.2",
     "gatsby": "^2.22.15",
     "gatsby-plugin-manifest": "^2.4.0",
