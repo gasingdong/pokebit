@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { GridLayout } from '@egjs/react-infinitegrid';
 import axios from 'axios';
 import 'normalize.css';
 import '../stylesheets/main.scss';
@@ -19,9 +20,23 @@ const Home: React.FC = () => {
 
   return (
     <div className="container">
-      {pokemonList.map((element: BasicPokemon) => (
-        <PokemonCard key={element.name} pokemon={element} />
-      ))}
+      <GridLayout
+        tag="div"
+        useFirstRender={false}
+        loading={<div>Loading...</div>}
+        options={{
+          threshold: 100,
+          isOverflowScroll: false,
+          isEqualSize: false,
+          isConstantSize: false,
+          useFit: false,
+          useRecycle: false,
+          horizontal: false,
+        }}
+        layoutOptions={{
+          align: 'justify',
+        }}
+      />
     </div>
   );
 };
