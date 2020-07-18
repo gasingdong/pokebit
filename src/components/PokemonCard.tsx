@@ -35,6 +35,7 @@ const PokemonCard: React.FC<PokemonCardProps> = ({
   const [pokemonName, setPokemonName] = useState(pokemon.name);
 
   useEffect(() => {
+    let mounted = true;
     const fetchPokemonData = async (): Promise<void> => {
       const { data } = await axios.get(
         `http://localhost:5000/api/pokemon/${pokemon.name}`
@@ -45,7 +46,13 @@ const PokemonCard: React.FC<PokemonCardProps> = ({
       data.species = species.data;
       setPokemonData(data);
     };
-    fetchPokemonData();
+
+    if (mounted) {
+      fetchPokemonData();
+    }
+    return (): void => {
+      mounted = false;
+    };
   }, []);
 
   useEffect(() => {

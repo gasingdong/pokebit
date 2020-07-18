@@ -33,7 +33,7 @@ const Home: React.FC = () => {
     if (startLoading) {
       startLoading({});
     }
-    console.log(pokemonList);
+    console.log('loading more pokemon');
     const result = await axios.get(
       `http://localhost:5000/api/pokemon?offset=${pokemonList.length}`
     );
