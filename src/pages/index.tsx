@@ -15,57 +15,62 @@ const Home: React.FC = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [canLoadMore, setCanLoadMore] = useState(false);
 
-  // useEffect(() => {
-  //   const fetchPokemonList = async (): Promise<void> => {
-  //     setLoading(true);
-  //     const result = await axios.get('http://localhost:5000/api/pokemon');
-  //     setPokemonList(result.data.list);
-  //     setCanLoadMore(result.data.next);
-  //     setLoading(false);
-  //   };
-  //   fetchPokemonList();
-  // }, []);
-
-  const loadPokemon = async ({
-    groupKey,
-    startLoading,
-  }: OnAppend): Promise<void> => {
-    if (startLoading) {
-      startLoading({});
-    }
+  const loadPokemon = async (): Promise<void> => {
     console.log('loading more pokemon');
+    setLoading(true);
     const result = await axios.get(
       `http://localhost:5000/api/pokemon?offset=${pokemonList.length}`
     );
     setPokemonList(pokemonList.concat(result.data.list));
     setCanLoadMore(result.data.next);
+    setLoading(false);
+  };
+
+  useEffect(() => {
+    loadPokemon();
+  }, []);
+
+  const onAppend = ({ currentTarget, startLoading }: OnAppend): void => {
+    console.log('appendaaaaa');
+
+    if (currentTarget?.isProcessing) {
+      console.log('processing');
+      return;
+    }
+    console.log('append');
+
+    if (startLoading) {
+      console.log('start loading');
+      startLoading({});
+      loadPokemon();
+      console.log('loading done');
+    }
   };
 
   const onLayoutComplete = ({
     isLayout,
     endLoading,
-  }: OnLayoutComplete): false | void =>
-    !isLayout && endLoading && endLoading({});
+  }: OnLayoutComplete): false | void => {
+    console.log('layout complete');
+    return !isLayout && endLoading && endLoading({});
+  };
 
   return (
     <div className="container">
       <GridLayout
         tag="div"
-        useFirstRender={false}
-        // onAppend={loadPokemon}
-        // onLayoutComplete={onLayoutComplete}
         loading={<div>Loading...</div>}
+        onAppend={onAppend}
+        onLayoutComplete={onLayoutComplete}
         options={{
-          threshold: 100,
           isOverflowScroll: false,
-          isEqualSize: false,
-          isConstantSize: false,
-          useFit: false,
-          useRecycle: false,
+          useRecycle: true,
           horizontal: false,
+          useFit: true,
         }}
         layoutOptions={{
-          align: 'justify',
+          margin: 5,
+          align: 'center',
         }}
       />
       {pokemonList.length > 0 &&
