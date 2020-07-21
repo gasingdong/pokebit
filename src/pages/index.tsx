@@ -1,9 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import {
-  GridLayout,
-  OnAppend,
-  OnLayoutComplete,
-} from '@egjs/react-infinitegrid';
+import InfiniteScroll from 'react-infinite-scroller';
 import axios from 'axios';
 import 'normalize.css';
 import '../stylesheets/main.scss';
@@ -30,53 +26,19 @@ const Home: React.FC = () => {
     loadPokemon();
   }, []);
 
-  const onAppend = ({ currentTarget, startLoading }: OnAppend): void => {
-    console.log('appendaaaaa');
-
-    if (currentTarget?.isProcessing) {
-      console.log('processing');
-      return;
-    }
-    console.log('append');
-
-    if (startLoading) {
-      console.log('start loading');
-      startLoading({});
-      loadPokemon();
-      console.log('loading done');
-    }
-  };
-
-  const onLayoutComplete = ({
-    isLayout,
-    endLoading,
-  }: OnLayoutComplete): false | void => {
-    console.log('layout complete');
-    return !isLayout && endLoading && endLoading({});
-  };
-
   return (
     <div className="container">
-      <GridLayout
-        tag="div"
-        loading={<div>Loading...</div>}
-        onAppend={onAppend}
-        onLayoutComplete={onLayoutComplete}
-        options={{
-          isOverflowScroll: false,
-          useRecycle: true,
-          horizontal: false,
-          useFit: true,
-        }}
-        layoutOptions={{
-          margin: 5,
-          align: 'center',
-        }}
-      />
-      {pokemonList.length > 0 &&
-        pokemonList.map((pokemon: BasicPokemon) => (
-          <PokemonCard key={pokemon.name} pokemon={pokemon} />
-        ))}
+      <InfiniteScroll
+        pageStart={0}
+        loadMore={loadPokemon}
+        hasMore={canLoadMore}
+        loader={<div>Loading...</div>}
+      >
+        {pokemonList.length > 0 &&
+          pokemonList.map((pokemon: BasicPokemon) => (
+            <PokemonCard key={pokemon.name} pokemon={pokemon} />
+          ))}
+      </InfiniteScroll>
     </div>
   );
 };
