@@ -27,19 +27,18 @@ const Home: React.FC = () => {
   }, []);
 
   return (
-    <div className="container">
-      <InfiniteScroll
-        pageStart={0}
-        loadMore={loadPokemon}
-        hasMore={canLoadMore}
-        loader={<div>Loading...</div>}
-      >
-        {pokemonList.length > 0 &&
-          pokemonList.map((pokemon: BasicPokemon) => (
-            <PokemonCard key={pokemon.name} pokemon={pokemon} />
-          ))}
-      </InfiniteScroll>
-    </div>
+    <InfiniteScroll
+      pageStart={0}
+      loadMore={loadPokemon}
+      hasMore={canLoadMore}
+      loader={<div>Loading...</div>}
+      className="container"
+    >
+      {pokemonList.length > 0 &&
+        pokemonList.map((pokemon: BasicPokemon) => (
+          <PokemonCard key={pokemon.name} pokemon={pokemon} />
+        ))}
+    </InfiniteScroll>
   );
 };
 
