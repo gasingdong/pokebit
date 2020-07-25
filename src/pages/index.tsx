@@ -4,9 +4,12 @@ import axios from 'axios';
 import 'normalize.css';
 import '../stylesheets/main.scss';
 import PokemonCard from '../components/PokemonCard';
+import OptionsBlock from '../components/OptionsBlock';
+import { Options } from '../utils/types';
 
 const Home: React.FC = () => {
   const [pokemonList, setPokemonList] = useState<BasicPokemon[]>([]);
+  const [options, setOptions] = useState<Options>({ search: '' });
   const [isLoading, setLoading] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
   const [canLoadMore, setCanLoadMore] = useState(false);
@@ -27,18 +30,20 @@ const Home: React.FC = () => {
   }, []);
 
   return (
-    <InfiniteScroll
-      pageStart={0}
-      loadMore={loadPokemon}
-      hasMore={canLoadMore}
-      loader={<div>Loading...</div>}
-      className="container"
-    >
-      {pokemonList.length > 0 &&
-        pokemonList.map((pokemon: BasicPokemon) => (
-          <PokemonCard key={pokemon.name} pokemon={pokemon} />
-        ))}
-    </InfiniteScroll>
+    <div className="container" role="main">
+      <OptionsBlock options={options} setOptions={setOptions} />
+      <InfiniteScroll
+        pageStart={0}
+        loadMore={loadPokemon}
+        hasMore={canLoadMore}
+        loader={<div>Loading...</div>}
+      >
+        {pokemonList.length > 0 &&
+          pokemonList.map((pokemon: BasicPokemon) => (
+            <PokemonCard key={pokemon.name} pokemon={pokemon} />
+          ))}
+      </InfiniteScroll>
+    </div>
   );
 };
 
