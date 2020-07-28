@@ -3,13 +3,14 @@ import InfiniteScroll from 'react-infinite-scroller';
 import axios from 'axios';
 import 'normalize.css';
 import '../stylesheets/main.scss';
+import _ from 'lodash';
 import PokemonCard from '../components/PokemonCard';
 import OptionsBlock from '../components/OptionsBlock';
 import { Options } from '../utils/types';
 
 const Home: React.FC = () => {
   const [pokemonList, setPokemonList] = useState<BasicPokemon[]>([]);
-  const [options, setOptions] = useState<Options>({ search: '' });
+  const [query, setQuery] = useState<Options>({ search: '' });
   const [isLoading, setLoading] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
   const [canLoadMore, setCanLoadMore] = useState(false);
@@ -25,18 +26,29 @@ const Home: React.FC = () => {
     setLoading(false);
   };
 
+  const sendQuery = async (value: Options): Promise<void> => {
+    console.log(value);
+  };
+
+  const search = _.debounce(sendQuery, 30000);
+
   useEffect(() => {
     loadPokemon();
   }, []);
 
+  useEffect(() => {
+    search(query);
+  }, [query]);
+
   return (
     <div className="container" role="main">
-      <OptionsBlock options={options} setOptions={setOptions} />
+      <OptionsBlock query={query} setQuery={setQuery} />
       <InfiniteScroll
         pageStart={0}
         loadMore={loadPokemon}
         hasMore={canLoadMore}
         loader={<div>Loading...</div>}
+        className="pokemon-list"
       >
         {pokemonList.length > 0 &&
           pokemonList.map((pokemon: BasicPokemon) => (

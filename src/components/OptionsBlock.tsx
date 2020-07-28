@@ -1,19 +1,21 @@
-import React, { useState, useEffect, Dispatch } from 'react';
+import React, { useState, Dispatch } from 'react';
 import { Options } from '../utils/types';
 
 type OptionsBlockProps = {
-  options: Options;
-  setOptions: Dispatch<Options>;
+  query: Options;
+  setQuery: Dispatch<Options>;
 };
 
 const OptionsBlock: React.FC<OptionsBlockProps> = ({
-  options,
-  setOptions,
+  query,
+  setQuery,
 }: OptionsBlockProps) => {
-  const handleChange = (evt: React.ChangeEvent<HTMLInputElement>): void => {
-    setOptions({
-      ...options,
-      search: evt.target.value,
+  const handleChange = ({
+    target: { value },
+  }: React.ChangeEvent<HTMLInputElement>): void => {
+    setQuery({
+      ...query,
+      search: value,
     });
   };
 
@@ -24,7 +26,7 @@ const OptionsBlock: React.FC<OptionsBlockProps> = ({
         <input
           id="search"
           type="text"
-          value={options.search}
+          value={query.search}
           onChange={handleChange}
         />
       </label>
