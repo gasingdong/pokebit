@@ -44,7 +44,10 @@ const PokemonCard: React.FC<PokemonCardProps> = ({
         `http://localhost:5000/api/species/${data.species.name}`
       );
       data.species = species.data;
-      setPokemonData(data);
+
+      if (mounted) {
+        setPokemonData(data);
+      }
     };
 
     if (mounted) {
@@ -57,7 +60,6 @@ const PokemonCard: React.FC<PokemonCardProps> = ({
 
   useEffect(() => {
     if (pokemonData) {
-      console.log(pokemonData);
       const translatedName = pokemonData.species.names.find(
         (element) => element.language.name === 'en'
       );

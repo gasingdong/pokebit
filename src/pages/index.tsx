@@ -1,42 +1,58 @@
 import React, { useState, useEffect } from 'react';
 import InfiniteScroll from 'react-infinite-scroller';
-import axios from 'axios';
+import axios, { CancelTokenSource } from 'axios';
 import 'normalize.css';
 import '../stylesheets/main.scss';
-import _ from 'lodash';
+import _, { Cancelable } from 'lodash';
 import PokemonCard from '../components/PokemonCard';
 import OptionsBlock from '../components/OptionsBlock';
-import { Options } from '../utils/types';
+import { Options, BasicPokemon } from '../utils/types';
+import fetchData from '../utils/axiosCancellable';
 
 const Home: React.FC = () => {
   const [pokemonList, setPokemonList] = useState<BasicPokemon[]>([]);
   const [query, setQuery] = useState<Options>({ search: '' });
+  const [debouncedQuery, setDebouncedQuery] = useState<Cancelable>();
   const [isLoading, setLoading] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
   const [canLoadMore, setCanLoadMore] = useState(false);
 
-  const loadPokemon = async (): Promise<void> => {
-    console.log('loading more pokemon');
+  const loadMorePokemon = async (): Promise<void> => {
     setLoading(true);
     const result = await axios.get(
-      `http://localhost:5000/api/pokemon?offset=${pokemonList.length}`
+      `http://localhost:5000/api/pokemon?search=${query}&offset=${pokemonList.length}`
     );
     setPokemonList(pokemonList.concat(result.data.list));
     setCanLoadMore(result.data.next);
     setLoading(false);
   };
 
-  const sendQuery = async (value: Options): Promise<void> => {
-    console.log(value);
+  const searchPokemon = async (search: string): Promise<void> => {
+    setLoading(true);
+    const { result } = await fetchData(search);
+
+    if (result) {
+      setPokemonList(result.list);
+      setCanLoadMore(result.next);
+      console.log(result);
+    }
+    setLoading(false);
   };
 
-  const search = _.debounce(sendQuery, 30000);
+  const sendQuery = async (value: Options): Promise<void> => {
+    searchPokemon(value.search);
+  };
 
   useEffect(() => {
-    loadPokemon();
-  }, []);
+    const search = _.debounce(sendQuery, 300);
 
-  useEffect(() => {
+    setDebouncedQuery((prevQuery) => {
+      if (prevQuery?.cancel) {
+        prevQuery.cancel();
+      }
+      return search;
+    });
+
     search(query);
   }, [query]);
 
@@ -45,7 +61,7 @@ const Home: React.FC = () => {
       <OptionsBlock query={query} setQuery={setQuery} />
       <InfiniteScroll
         pageStart={0}
-        loadMore={loadPokemon}
+        loadMore={loadMorePokemon}
         hasMore={canLoadMore}
         loader={<div>Loading...</div>}
         className="pokemon-list"
@@ -57,11 +73,6 @@ const Home: React.FC = () => {
       </InfiniteScroll>
     </div>
   );
-};
-
-type BasicPokemon = {
-  name: string;
-  url: string;
 };
 
 export default Home;
