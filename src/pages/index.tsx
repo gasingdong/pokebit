@@ -18,13 +18,17 @@ const Home: React.FC = () => {
   const [canLoadMore, setCanLoadMore] = useState(false);
 
   const loadMorePokemon = async (): Promise<void> => {
-    setLoading(true);
-    const result = await axios.get(
-      `http://localhost:5000/api/pokemon?search=${query}&offset=${pokemonList.length}`
-    );
-    setPokemonList(pokemonList.concat(result.data.list));
-    setCanLoadMore(result.data.next);
-    setLoading(false);
+    if (!isLoading) {
+      setLoading(true);
+      console.log('loading:', query, pokemonList.length);
+      const result = await axios.get(
+        `http://localhost:5000/api/pokemon?search=${query.search}&offset=${pokemonList.length}`
+      );
+      console.log('loaded more:', result.data);
+      setPokemonList(pokemonList.concat(result.data.list));
+      setCanLoadMore(result.data.next);
+      setLoading(false);
+    }
   };
 
   const searchPokemon = async (search: string): Promise<void> => {
@@ -34,7 +38,7 @@ const Home: React.FC = () => {
     if (result) {
       setPokemonList(result.list);
       setCanLoadMore(result.next);
-      console.log(result);
+      console.log('searched:', result);
     }
     setLoading(false);
   };
