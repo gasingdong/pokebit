@@ -84,7 +84,10 @@ const PokemonCard: React.FC<PokemonCardProps> = ({
       <div className="card-content">
         <div className="sprite">
           <img
-            src={pokemonData ? pokemonData.sprites.front_default : ''}
+            src={
+              pokemonData?.sprites.front_default ||
+              'https://img.icons8.com/pastel-glyph/96/000000/cancel-2.png'
+            }
             alt="Pokemon sprite"
           />
         </div>

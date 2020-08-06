@@ -61,21 +61,26 @@ const Home: React.FC = () => {
   }, [query]);
 
   return (
-    <div className="container" role="main">
-      <OptionsBlock query={query} setQuery={setQuery} />
-      <InfiniteScroll
-        pageStart={0}
-        loadMore={loadMorePokemon}
-        hasMore={canLoadMore}
-        loader={<div>Loading...</div>}
-        className="pokemon-list"
-      >
-        {pokemonList.length > 0 &&
-          pokemonList.map((pokemon: BasicPokemon) => (
-            <PokemonCard key={pokemon.name} pokemon={pokemon} />
-          ))}
-      </InfiniteScroll>
-    </div>
+    <>
+      <a href="https://icons8.com/icon/114053/unavailable">
+        Unavailable icon by Icons8
+      </a>
+      <div className="container" role="main">
+        <OptionsBlock query={query} setQuery={setQuery} />
+        <InfiniteScroll
+          pageStart={0}
+          loadMore={loadMorePokemon}
+          hasMore={canLoadMore}
+          loader={<div>Loading...</div>}
+          className="pokemon-list"
+        >
+          {pokemonList.length > 0 &&
+            pokemonList.map((pokemon: BasicPokemon) => (
+              <PokemonCard key={pokemon.name} pokemon={pokemon} />
+            ))}
+        </InfiniteScroll>
+      </div>
+    </>
   );
 };
 
