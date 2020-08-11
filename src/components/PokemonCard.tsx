@@ -14,6 +14,7 @@ type PokemonCardProps = {
 type PokemonData = {
   species: {
     names: Array<{ language: { name: string; url: string }; name: string }>;
+    flavor_text_entries: Array<{ flavor_text: string }>;
   };
   sprites: {
     front_default: string;
@@ -90,6 +91,12 @@ const PokemonCard: React.FC<PokemonCardProps> = ({
             }
             alt="Pokemon sprite"
           />
+        </div>
+        <div className="pokedex-entry info-block">
+          {pokemonData?.species.flavor_text_entries[0].flavor_text.replace(
+            '\u000c',
+            '\n'
+          )}
         </div>
         {pokemonData?.height && pokemonData.weight && (
           <BodyStatsBlock
